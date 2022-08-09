@@ -1,0 +1,60 @@
+<div class="container">
+  <div class="row">
+    <div class= "col-md-3">
+    <!--user info-->
+      <h1 class='my-5'>User info</h1>
+      <p class="border-bottom"><%= image_tag @user.get_profile_image(200,200)%></p>
+      <div class="row border-bottom">
+        <h5 class='col text-dark py-3 me-3'>name</h5>
+        <h5 class="col py-3"><%= @user.name %></h5>
+      </div>
+      <div class="row border-bottom">
+        <h5 class='col text-dark py-3 me-3'>introduction</h5>
+        <h5 class="col py-3"><%= @user.introduction %></h5>
+      </div>
+      <%= link_to edit_user_path(@user), method: :get, class:"btn btn-outline-secondary" do%>
+        <i class="fas fa-user-cog fs-3 text-dark"></i>
+      <% end %>
+<!--新規投稿画面-->
+      <div>
+        <h1>New book</h1>
+        <%= form_with model: @books do |f| %>
+          <h5 class="fw-bolder">Title</h5>
+            <%= f.text_field :title %>
+          <h5>Opinion</h5>
+            <%= f.text_area :body %>
+          <div>
+            <%= f.submit 'Create Book', class: "btn btn-success mt-4" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+<!-- ユーザーの投稿一覧 -->
+    <div class="offset-md-1 col-md-8 my-5">
+      <h1>Books</h1>
+       <table class="table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Titile</th>
+            <th>Opinion</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @book.each do |book| %>
+          <tr>
+            <td>
+              <%= link_to user_path(book.user.id) do %>
+                <%= image_tag book.user.get_profile_image(100,100) %>
+                <% end %>
+            </td>
+            <td><%= link_to book.title, book %></td>
+            <td><%= book.body %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    </div>
+  </div>
+
